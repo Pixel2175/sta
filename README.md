@@ -7,6 +7,7 @@ STA creates a UNIX socket on the server side and keeps running, waiting for upda
 When you run it for the first time, it starts the server (daemon) and keeps running.  
 After that, you can send status updates.
 
+> **Note:** This project was created for learning purposes. 
 ### Example
 ```bash
 # Run the server
@@ -21,5 +22,13 @@ sta -id 1 -name "$(date +%H:%M)"
 This sends the current time to the server with a unique ID.
 To update the status, rerun the command.
 
-> **Note:** This project was created for learning purposes. 
 
+i just get slstatus functions and put them here
+## Patches
+### slstatus
+this patch lets u use it like slstatus, but you can control it in 2 different ways
+- you can send a signle update from client-side using `sta -id <int>` 
+- every command has its own delay ; 0 means run it ones and do thing else 
+
+
+> **Note:** i just took the slstatus functions and put them here. 
