@@ -25,6 +25,13 @@ To update the status, rerun the command.
 
 i just get slstatus functions and put them here
 ## Patches
+> how to apply patches
+just run this after clone the repo
+```
+cd sta
+python patcher.py
+
+```
 ### slstatus
 this patch lets u use it like slstatus, but you can control it in 2 different ways
 - you can send a signle update from client-side using `sta -id <int>` 
