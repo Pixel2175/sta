@@ -1,8 +1,13 @@
-compile:
-	cc -o sta main.c
+build: config.h
+	cc -w -o sta sta.c ./components/* -pthread
 
-install: compile
+config.h:
+	cp config.def.h config.h
+
+install: build
 	cp sta /usr/local/bin
 
 uninstall:
-	rm /usr/local/bin/sta
+	rm -f /usr/local/bin/sta
+clean:
+	rm -f ./sta  
