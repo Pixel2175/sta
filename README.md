@@ -1,41 +1,29 @@
 # STA
-sta is a minimal & simple status monitor app built in c.
+**STA** is a minimal status monitor written in C.
+
+## About
+STA is inspired by slstatus. The core code is fully rewritten; only the config structure (with some edits) and the status-fetching functions are from slstatus.
 
 ## How it works
-STA creates a UNIX socket on the server side and keeps running, waiting for updates from clients.
+STA runs as a server (daemon) using a UNIX socket and waits for updates from clients.
+You can update any status by specifying its ID from the config file, then run:
+```
+sta -id <ID>
+```
 
-When you run it for the first time, it starts the server (daemon) and keeps running.  
-After that, you can send status updates.
+This sends a signal to the socket and refreshs the status.
+You can configure the displayed status in `config.def.h`.
 
-> **Note:** This project was created for learning purposes. 
 ### Example
 ```bash
-# Run the server
-sta
-```
+# Start the server
+sta -s
 
-```
 # Send a status update
-sta -id 1 -name "$(date +%H:%M)"
+sta -id 1
 ```
 
-This sends the current time to the server with a unique ID.
-To update the status, rerun the command.
+This sends the current time (or other info) to the server with a unique ID.
+Rerun the command whenever you want to update the status.
 
-
-i just get slstatus functions and put them here
-## Patches
-> how to apply patches
-just run this after clone the repo
-```
-cd sta
-python patcher.py
-
-```
-### slstatus
-this patch lets u use it like slstatus, but you can control it in 2 different ways
-- you can send a signle update from client-side using `sta -id <int>` 
-- every command has its own delay ; 0 means run it ones and do thing else 
-
-
-> **Note:** i just took the slstatus functions and put them here. 
+> **Note:** STA was created for learning purposes.
