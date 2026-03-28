@@ -235,8 +235,12 @@ int main(int argc, char const *argv[])
 
 	for (int i = 1; i < argc; ++i) {
 		if (!strcmp(argv[i], "-s") || !strcmp(argv[i], "--server")) {
-			if (access(SOCKET_PATH, F_OK) == 0)
-				die("ERROR: socket exists in " SOCKET_PATH);
+			if (access(SOCKET_PATH, F_OK) == 0){
+				if ( connect(sock, (struct sockaddr *)&addr, sizeof(addr) ) == 0 )
+					unlink(SOCKET_PATH);
+				else
+					die("ERROR: socket exists in " SOCKET_PATH);
+			}
 			run_server(&addr, sock, list);
 		}
 	}
