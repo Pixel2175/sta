@@ -58,9 +58,6 @@
  */
 
 static const Args commands[] = {
-    {battery_state, " %s "     , "BAT1", 2, 1000},
-    {battery_perc , "   %s%% │", "BAT1", 3, 1000},
-	{disk_perc    , "   %s%% │", "/home/", 4, 60*1000},
-	{wifi_essid   , "   %s │" , "wlan0", 5, 60*1000},
-	{run_command  , " %s "     , "date '+%H:%M %b %d'", 8, 60*1000},
+	/* function     format       argument    id    delay(ms)  */
+	{ datetime,       "%s",      "%F %T",    1,    1000},
 };
