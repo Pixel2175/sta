@@ -41,7 +41,7 @@ typedef struct {
 Pros *init()
 {
 	Pros *list = malloc(sizeof(Pros));
-	list->process = malloc(sizeof(Pro));
+	list->process = NULL;
 	list->count = 0;
 	return list;
 }
