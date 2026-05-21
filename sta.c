@@ -191,7 +191,7 @@ void run_client(int argc, char const *argv[], struct sockaddr_un *addr, int sock
 			}
 		}
 		if (buf[0] == '\0') {
-			warn("client", "no command found for id %d", id);
+			warn("Client: no command found for id %d", id);
 			return;
 		}
 	}
