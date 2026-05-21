@@ -235,11 +235,12 @@ int main(int argc, char const *argv[])
 
 	if (access(SOCKET_PATH, F_OK) == 0) {
 		run_client(argc, argv, &addr, sock);
-	} else {
-		die("ERROR: server not running (no socket at " SOCKET_PATH ")");
+		goto clean_up;
 	}
 
-	close(sock);
+	warn("ERROR: server not running (no socket at " SOCKET_PATH ")");
 	unlink(SOCKET_PATH);
+clean_up:
+	close(sock);
 	return 0;
 }
