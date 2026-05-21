@@ -117,23 +117,25 @@ void *worker(void *arg)
 void run_server(struct sockaddr_un *addr, int sock, Pros *list)
 {
 	int cmds = sizeof(commands) / sizeof(commands[0]);
-	pthread_t tids[cmds];
-	for (int i = 0; i < cmds; ++i) {
-		if (commands[i].delay) {
-			Potato *info = malloc(sizeof(Potato));
-			info->list = list;
-			info->id2 = i;
-			pthread_create(&tids[i], NULL, worker, info);
-		} else {
-			append(&commands[i], list);
-		}
-	}
 
 	if (bind(sock, (struct sockaddr *)addr, sizeof(*addr)) < 0)
 		warn("Bind: failed: %s", strerror(errno));
 
 	if (listen(sock, 5) < 0)
 		warn("Listen failed: %s", strerror(errno));
+
+	pthread_t tids[cmds];
+	for (int i = 0; i < cmds; ++i) {
+		if (commands[i].delay) {
+			Potato *info = malloc(sizeof(Potato));
+			info->list = list;
+			info->id2 = i;
+			if (pthread_create(&tids[i], NULL, worker, info))
+				warn("Thread: can't create thread for id: %d", info->id2);
+		} else {
+			append(&commands[i], list);
+		}
+	}
 
 	while (1) {
 		int client = accept(sock, NULL, NULL);
