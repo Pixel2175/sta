@@ -91,20 +91,13 @@ void usage()
 	exit(1);
 }
 
-static char *fmt_cmd(const char *cmd, char *fmt)
-{
-	char *buf = malloc(512);
-	snprintf(buf, 512, fmt, cmd);
-	return buf;
-}
-
 void append(Args *command, Pros *list)
 {
 	const char *cmd = command->func(command->parm);
 	if (!cmd) cmd = "N/A";
-	char *tmp = fmt_cmd(cmd, command->fmt);
+	char tmp[256];
+	snprintf(tmp, sizeof(tmp), command->fmt, cmd);
 	add_pro(list, command->id, tmp);
-	free(tmp);
 	show_pros(list);
 }
 
@@ -191,9 +184,9 @@ void run_client(int argc, char const *argv[], struct sockaddr_un *addr, int sock
 			if (id == commands[i].id) {
 				const char *cmd = commands[i].func(commands[i].parm);
 				if (!cmd) cmd = "N/A";
-				char *tmp = fmt_cmd(cmd, commands[i].fmt);
+				char tmp[256];
+				snprintf(tmp, sizeof(tmp), commands[i].fmt, cmd);
 				snprintf(buf, sizeof(buf), "%d|+|%s", id, tmp);
-				free(tmp);
 				break;
 			}
 		}
