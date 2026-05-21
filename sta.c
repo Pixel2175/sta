@@ -220,10 +220,13 @@ int main(int argc, char const *argv[])
 	for (int i = 1; i < argc; ++i) {
 		  if (strcmp(argv[i], "-s") == 0 || strcmp(argv[i], "--server") == 0) {
 			if (access(SOCKET_PATH, F_OK) == 0){
-				if ( connect(sock, (struct sockaddr *)&addr, sizeof(addr) ) == 0 )
-					die("Socket: socket exists and connectable.");		
-			}else 
-			  unlink(SOCKET_PATH);
+				int checking_sock = socket(AF_UNIX, SOCK_STREAM, 0);
+				if (checking_sock >= 0) {
+				  if (connect(checking_sock, (struct sockaddr *)&addr, sizeof(addr)) == 0)
+					  die("Socket: socket exists and connectable.");		
+				  close(checking_sock);
+				}
+			}
 			run_server(&addr, sock, list);
 		}
 	}
