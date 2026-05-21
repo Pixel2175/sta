@@ -12,8 +12,8 @@
 
 typedef struct{
 	const char *(*func)(const char *);
-	char *fmt;
-	char *parm;
+	const char *fmt;
+	const char *parm;
 	int id;
 	int delay;
 }Args;
@@ -46,7 +46,7 @@ Pros *init()
 	return list;
 }
 
-void add_pro(Pros *list, int id, char *name)
+void add_pro(Pros *list, int id, const char *name)
 {
 	for (int i = 0; i < list->count; ++i) {
 		if (id == list->process[i].id) {
