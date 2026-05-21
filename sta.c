@@ -226,6 +226,8 @@ int main(int argc, char const *argv[])
 					  die("Socket: socket exists and connectable.");		
 				  close(checking_sock);
 				}
+			if (unlink(SOCKET_PATH) == -1)
+			  die("Socket: socket clean up failed.");
 			}
 			run_server(&addr, sock, list);
 		}
@@ -238,5 +240,6 @@ int main(int argc, char const *argv[])
 	}
 
 	close(sock);
+	unlink(SOCKET_PATH);
 	return 0;
 }
